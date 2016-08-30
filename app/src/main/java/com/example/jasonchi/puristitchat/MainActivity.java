@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError{
-                String api = "ydNHyu6SxFBdmzU2QNOvVnIOUKefuQy"+":"+"asdfasdf";
+                String api = "ydNHyu6SxFBdmzU2QNOvVnIOUKefuQy"+":"+"";
                 String auth = "Basic " + Base64.encodeToString(api.getBytes(), Base64.NO_WRAP);
                 HashMap<String,String> headers = new HashMap<>();
                 headers.put("Authorization",auth);
