@@ -1,11 +1,15 @@
 package com.example.jasonchi.puristitchat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,14 +22,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    WebView showWeb;
+    Button goChat;
     String registerUrl = "https://api.puristit.com/register";
     String initializeUrl = "https://api.puristit.com/initialize";
     String ChatUrl = "";
     String serverApiKey = "KBc1L02d1il8JyikmOsZlCO0enTEGJl";
     HashMap<String,String> param;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +40,6 @@ public class MainActivity extends AppCompatActivity {
         init();
 
         sendRequest(registerUrl, param, serverApiKey);
-
-        showWeb.setWebViewClient(mWebViewClient);
-        showWeb.setInitialScale(1);
-        showWeb.getSettings().setLoadWithOverviewMode(true);
-        showWeb.getSettings().setUseWideViewPort(true);
-        showWeb.getSettings().setJavaScriptEnabled(true);
-        showWeb.getSettings().setDomStorageEnabled(true);
-        showWeb.loadUrl("http://user.puristit.com/chat/3ezUxVejdn5AUGa4eHdsaGt2CqdI6jA?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0");
 
     }
 
@@ -62,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         param.put("name","Jason");
         param.put("platform","Android");
 
-        showWeb = (WebView) findViewById(R.id.showWeb);
+        goChat = (Button) findViewById(R.id.goChat);
+        goChat.setOnClickListener(this);
 
     }
 
@@ -96,4 +94,12 @@ public class MainActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
+    @Override
+    public void onClick(View v) {
+
+        if(v.getId() == goChat.getId())
+        {
+            startActivity(intent = new Intent(this, LiveChatActivity.class));
+        }
+    }
 }
