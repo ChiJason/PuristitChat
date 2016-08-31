@@ -22,7 +22,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView resultText;
     WebView showWeb;
     String registerUrl = "https://api.puristit.com/register";
     String initializeUrl = "https://api.puristit.com/initialize";
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         param.put("name","Jason");
         param.put("platform","Android");
 
-        resultText = (TextView) findViewById(R.id.showResult);
         showWeb = (WebView) findViewById(R.id.showWeb);
 
     }
@@ -76,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        resultText.setText(response.toString());
                         Log.e("Response", response.toString());
                     }
                 }, new Response.ErrorListener() {
