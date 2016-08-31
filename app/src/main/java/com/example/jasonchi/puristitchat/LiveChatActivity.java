@@ -1,6 +1,7 @@
 package com.example.jasonchi.puristitchat;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.webkit.WebViewClient;
 public class LiveChatActivity extends AppCompatActivity {
 
     WebView chatWin;
+    Intent intent = this.getIntent();
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -98,6 +100,8 @@ public class LiveChatActivity extends AppCompatActivity {
         mContentView = findViewById(R.id.fullscreen_content);
         chatWin = (WebView) findViewById(R.id.chatWin);
 
+        String chatUrl = intent.getStringExtra("chatURL") + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0";
+
         chatWin.setWebViewClient(mWebViewClient);
         chatWin.setInitialScale(1);
         chatWin.getSettings().setSupportZoom(true);
@@ -107,7 +111,7 @@ public class LiveChatActivity extends AppCompatActivity {
         chatWin.getSettings().setUseWideViewPort(true);
         chatWin.getSettings().setJavaScriptEnabled(true);
         chatWin.getSettings().setDomStorageEnabled(true);
-        chatWin.loadUrl("http://user.puristit.com/chat/3ezUxVejdn5AUGa4eHdsaGt2CqdI6jA?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0");
+        chatWin.loadUrl(chatUrl);
 
 
         // Set up the user interaction to manually show or hide the system UI.

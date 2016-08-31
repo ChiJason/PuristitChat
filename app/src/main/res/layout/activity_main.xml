@@ -12,12 +12,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="username:"
+            android:text=" username:"
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
+            android:id="@+id/uName"
             android:hint="input a username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -30,23 +31,44 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="password:"
+            android:text=" password:"
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <EditText
+            android:id="@+id/uPasswd"
             android:hint="input a password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/goChat"
-        android:text="Chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/regisBtn"
+            android:text="Register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/goChat"
+            android:text="Chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:text="Register Result"
+        android:textSize="20dp"
+        android:id="@+id/regisResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

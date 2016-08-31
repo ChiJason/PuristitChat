@@ -1,14 +1,17 @@
-/**
- * Created by JasonChi on 2016/8/30.
- */
-public class Users {
+package com.example.jasonchi.puristitchat;
 
-    private String username = "";
-    private String password = "";
-    private String name = "";
+/**
+ * Created by Wei on 2016/8/31.
+ */
+
+public class Customer {
+
+    private String username;
+    private String password;
+    private String name;
     private String platform = "Android";
-    private String p_username = "";
-    private String p_password = "";
+    private String p_username;
+    private String p_password;
 
     public String getUsername() {
         return username;
@@ -58,3 +61,4 @@ public class Users {
         this.p_password = p_password;
     }
 }
+
