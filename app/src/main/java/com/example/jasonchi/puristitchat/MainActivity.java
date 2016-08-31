@@ -6,8 +6,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -43,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
         showWeb.getSettings().setLoadWithOverviewMode(true);
         showWeb.getSettings().setUseWideViewPort(true);
         showWeb.getSettings().setJavaScriptEnabled(true);
+        showWeb.getSettings().setDomStorageEnabled(true);
         showWeb.loadUrl("http://user.puristit.com/chat/3ezUxVejdn5AUGa4eHdsaGt2CqdI6jA?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0");
+
     }
 
     WebViewClient mWebViewClient = new WebViewClient() {
