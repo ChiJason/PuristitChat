@@ -4,10 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,9 +23,11 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     TextView resultText;
+    WebView showWeb;
     String registerUrl = "https://api.puristit.com/register";
     String initializeUrl = "https://api.puristit.com/initialize";
     String ChatUrl = "";
+    String serverApiKey = "KBc1L02d1il8JyikmOsZlCO0enTEGJl";
     HashMap<String,String> param;
 
     @Override
@@ -34,9 +37,42 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
+        sendRequest(registerUrl, param, serverApiKey);
+
+        showWeb.setWebViewClient(mWebViewClient);
+        showWeb.setInitialScale(1);
+        showWeb.getSettings().setLoadWithOverviewMode(true);
+        showWeb.getSettings().setUseWideViewPort(true);
+        showWeb.getSettings().setJavaScriptEnabled(true);
+        showWeb.loadUrl("http://user.puristit.com/chat/3ezUxVejdn5AUGa4eHdsaGt2CqdI6jA?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0");
+    }
+
+    WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+    };
+
+    public void init() {
+
+        param = new HashMap<>();
+        param.put("username","JC");
+        param.put("password","asdfasdf");
+        param.put("name","Jason");
+        param.put("platform","Android");
+
+        resultText = (TextView) findViewById(R.id.showResult);
+        showWeb = (WebView) findViewById(R.id.showWeb);
+
+    }
+
+    public void sendRequest(String url, HashMap<String,String> param, final String authKeys) {
+
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(registerUrl, new JSONObject(param),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, new JSONObject(param),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -51,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError{
-                String api = "ydNHyu6SxFBdmzU2QNOvVnIOUKefuQy"+":"+"";
-                String auth = "Basic " + Base64.encodeToString(api.getBytes(), Base64.NO_WRAP);
+                String apiKey = authKeys+":"+"";
+                String auth = "Basic " + Base64.encodeToString(apiKey.getBytes(), Base64.NO_WRAP);
                 HashMap<String,String> headers = new HashMap<>();
                 headers.put("Authorization",auth);
 
@@ -61,18 +97,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         queue.add(jsonObjectRequest);
-
     }
 
-    public void init() {
-
-        param = new HashMap<>();
-        param.put("username","JC");
-        param.put("password","asdfasdf");
-        param.put("name","Jason");
-        param.put("platform","Android");
-
-        resultText = (TextView) findViewById(R.id.showResult);
-
-    }
 }
