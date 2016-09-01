@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button goChat, regisBtn;
+    Button goChat, regisBtn, initBtn;
     TextView showResult;
     EditText uName, uPasswd;
     String registerUrl = "https://api.puristit.com/register";
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     HashMap<String,String> param, paramI;
     Intent intent;
     Customer cs;
-    JSONObject object;
     RequestQueue queue;
 
     @Override
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         showResult = (TextView) findViewById(R.id.regisResult);
         regisBtn = (Button) findViewById(R.id.regisBtn);
         regisBtn.setOnClickListener(this);
+        initBtn = (Button) findViewById(R.id.initBtn);
+        initBtn.setOnClickListener(this);
         goChat = (Button) findViewById(R.id.goChat);
         goChat.setOnClickListener(this);
 
@@ -63,13 +65,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void registerAPI(String url, HashMap<String,String> param, final String authKeys) {
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, new JSONObject(param),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(param),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("Response", response.toString());
                         try {
-                            object = new JSONObject(response.toString());
+                            JSONObject object = new JSONObject(response.toString());
                             JSONObject obj = object.getJSONObject("result");
                             cs.setP_username(obj.getString("p_username"));
                             cs.setP_password(obj.getString("p_password"));
@@ -102,13 +104,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void initailizeAPI(String url, HashMap<String,String> param, final String authKeys) {
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, new JSONObject(param),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(param),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("Response", response.toString());
                         try {
-                            object = new JSONObject(response.toString());
+                            JSONObject object = new JSONObject(response.toString());
                             JSONObject obj = object.getJSONObject("result");
                             chatUrl = obj.getString("chat_url");
 
@@ -141,8 +143,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == goChat.getId())
+        switch (v.getId())
         {
+            case R.id.regisBtn:
+                cs.setName(uName.getText().toString().trim());
+                cs.setPassword(uPasswd.getText().toString().trim());
+                cs.setUsername(uName.getText().toString().trim());
+
+                param = new HashMap<>();
+                param.put("username", cs.getUsername());
+                param.put("password", cs.getPassword());
+                param.put("name", cs.getName());
+                param.put("platform", cs.getPlatform());
+
+                if(cs.getUsername() != "" && cs.getPassword() != "")
+                {
+                    registerAPI(registerUrl, param, serverApiKey);
+                }else
+                {
+                    showResult.setText("Registration failure");
+                }
+
+                break;
+
+            case R.id.initBtn:
             paramI = new HashMap<>();
             paramI.put("p_username",cs.getP_username());
             paramI.put("password", cs.getP_password());
@@ -150,32 +174,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             paramI.put("platform", cs.getPlatform());
 
             initailizeAPI(initializeUrl, paramI, serverApiKey);
+                showResult.setText(chatUrl);
+                break;
 
-            intent = new Intent(this, LiveChatActivity.class);
+            case R.id.goChat:
+
+            intent = new Intent();
+            intent.setClass(MainActivity.this, LiveChatActivity.class);
             intent.putExtra("chatURL", chatUrl);
             startActivity(intent);
-
-        }else{
-
-            cs.setName(uName.getText().toString().trim());
-            cs.setPassword(uPasswd.getText().toString().trim());
-            cs.setUsername(uName.getText().toString().trim());
-
-            param = new HashMap<>();
-            param.put("username", cs.getUsername());
-            param.put("password", cs.getPassword());
-            param.put("name", cs.getName());
-            param.put("platform", cs.getPlatform());
-
-            if(cs.getUsername() != "" && cs.getPassword() != "")
-            {
-                registerAPI(registerUrl, param, serverApiKey);
-            }else
-            {
-                showResult.setText("Registration failure");
-            }
-
-
+                break;
         }
+
     }
 }
