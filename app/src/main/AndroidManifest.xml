@@ -17,11 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".LiveChatActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_live_chat"
             android:theme="@style/FullscreenTheme"></activity>
+
+
+
+
     </application>
 
 </manifest>

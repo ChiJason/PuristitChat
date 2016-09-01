@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "597341305359",
+    "firebase_url": "https://purist-itchat.firebaseio.com",
+    "project_id": "purist-itchat",
+    "storage_bucket": "purist-itchat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597341305359:android:eabe7ccf79a7f1b6",
+        "android_client_info": {
+          "package_name": "com.example.jasonchi.puristitchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597341305359-1haq8koli71u1q3gnpgu6bqs70tevr03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIL7qSHbzt8r4ImaKbRLHC-kTjqBuD1Mg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

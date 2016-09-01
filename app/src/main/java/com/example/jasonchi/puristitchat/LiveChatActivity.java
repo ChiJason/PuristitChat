@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -15,7 +16,7 @@ import android.webkit.WebViewClient;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class LiveChatActivity extends AppCompatActivity {
+public class LiveChatActivity extends AppCompatActivity implements View.OnTouchListener{
 
     WebView chatWin;
     /**
@@ -111,7 +112,9 @@ public class LiveChatActivity extends AppCompatActivity {
         chatWin.getSettings().setUseWideViewPort(true);
         chatWin.getSettings().setJavaScriptEnabled(true);
         chatWin.getSettings().setDomStorageEnabled(true);
-        chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0");
+        chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0&roomlist=1");
+
+        chatWin.setOnTouchListener(this);
 
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -187,5 +190,24 @@ public class LiveChatActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        WebView.HitTestResult hitTestResult = ((WebView) v).getHitTestResult();
+        int action = event.getActionMasked();
+
+        if(action == MotionEvent.ACTION_DOWN) {
+            int type = hitTestResult.getType();
+
+            switch (type) {
+                case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
+                    Log.d("onTouch", "超連結");
+                    break;
+            }
+        }
+        return false;
     }
 }
