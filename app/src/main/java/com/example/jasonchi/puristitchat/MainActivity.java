@@ -109,10 +109,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("Response", response.toString());
+
                         try {
                             JSONObject object = new JSONObject(response.toString());
                             JSONObject obj = object.getJSONObject("result");
                             chatUrl = obj.getString("chat_url");
+                            showResult.setText(chatUrl);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -163,28 +165,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     showResult.setText("Registration failure");
                 }
-
                 break;
 
             case R.id.initBtn:
-            paramI = new HashMap<>();
-            paramI.put("p_username",cs.getP_username());
-            paramI.put("password", cs.getP_password());
-            paramI.put("name", cs.getName());
-            paramI.put("platform", cs.getPlatform());
+                paramI = new HashMap<>();
+                paramI.put("p_username",cs.getP_username());
+                paramI.put("password", cs.getP_password());
+                paramI.put("name", cs.getName());
+                paramI.put("platform", cs.getPlatform());
 
-            initailizeAPI(initializeUrl, paramI, serverApiKey);
-                showResult.setText(chatUrl);
+                initailizeAPI(initializeUrl, paramI, serverApiKey);
                 break;
 
             case R.id.goChat:
 
-            intent = new Intent();
-            intent.setClass(MainActivity.this, LiveChatActivity.class);
-            intent.putExtra("chatURL", chatUrl);
-            startActivity(intent);
+                intent = new Intent();
+                intent.setClass(MainActivity.this, LiveChatActivity.class);
+                intent.putExtra("chatURL", chatUrl);
+                startActivity(intent);
                 break;
         }
-
     }
 }
