@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent intent;
     Customer cs;
     JSONObject object;
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         init();
+        queue = Volley.newRequestQueue(this);
 
     }
 
@@ -60,9 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void registerAPI(String url, HashMap<String,String> param, final String authKeys) {
-
-
-        RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, new JSONObject(param),
                 new Response.Listener<JSONObject>() {
@@ -102,9 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void initailizeAPI(String url, HashMap<String,String> param, final String authKeys) {
-
-
-        RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, new JSONObject(param),
                 new Response.Listener<JSONObject>() {
