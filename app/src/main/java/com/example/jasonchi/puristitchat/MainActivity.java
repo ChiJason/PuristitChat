@@ -8,10 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
-import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -22,11 +18,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent intent;
     Customer cs;
     MyLiveChat liveChat;
-    RequestQueue queue;
-
-    private HashMap<String,String> param,paramI;
-    private String registerUrl = "https://api.puristit.com/register";
-    private String initializeUrl = "https://api.puristit.com/initialize";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +47,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 cs.setUsername(uName.getText().toString().trim());
 
                 liveChat = new MyLiveChat(cs.getUsername(), cs.getPassword(), this);
+                showResult.setText("Login successful");
 
-                showResult.setText(liveChat.getChatUrl());
                 break;
             case R.id.goChat:
                 intent = new Intent();
                 intent.setClass(MainActivity.this, LiveChatActivity.class);
-                intent.putExtra("chat_url", liveChat.getChatUrl());
+                intent.putExtra("chaturl", liveChat.getChatUrl());
                 startActivity(intent);
                 break;
+
         }
     }
 }

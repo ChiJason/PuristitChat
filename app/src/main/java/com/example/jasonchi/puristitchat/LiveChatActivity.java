@@ -103,7 +103,6 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
         chatWin = (WebView) findViewById(R.id.chatWin);
 
         Intent intent = this.getIntent();
-        String chatUrl = intent.getStringExtra("chat_url");
 
         chatWin.setWebViewClient(mWebViewClient);
         chatWin.setInitialScale(1);
@@ -114,7 +113,7 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
         chatWin.getSettings().setUseWideViewPort(true);
         chatWin.getSettings().setJavaScriptEnabled(true);
         chatWin.getSettings().setDomStorageEnabled(true);
-        chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0&roomlist=1");
+        chatWin.loadUrl(intent.getStringExtra("chaturl") + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0&roomlist=1");
 
         chatWin.setOnTouchListener(this);
 

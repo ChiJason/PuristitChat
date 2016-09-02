@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Wei on 2016/9/2.
+ * Created by JasonChi on 2016/9/2.
  */
 public class MyLiveChat {
 
@@ -55,21 +55,13 @@ public class MyLiveChat {
 
         sendRequest(registerUrl, param);
 
-//        paramI = new HashMap<>();
-//        paramI.put("p_username", this.p_username);
-//        paramI.put("p_password", this.p_password);
-//        paramI.put("name", this.username);
-//        paramI.put("platform", this.platform);
-//
-//        sendRequest(initializeUrl, paramI);
-
     }
 
     public String getChatUrl(){
         return chatUrl;
     }
 
-    public void sendRequest(String url, HashMap<String,String> param) {
+    private void sendRequest(String url, HashMap<String,String> param) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(param),
                 new Response.Listener<JSONObject>() {
@@ -115,19 +107,4 @@ public class MyLiveChat {
        queue.add(jsonObjectRequest);
     }
 
-    public String getP_username(){ return this.p_username; }
-
-    public String getP_password(){ return this.p_password; }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getPlatform() {
-        return platform;
-    }
 }
