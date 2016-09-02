@@ -12,6 +12,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -19,6 +20,7 @@ import android.webkit.WebViewClient;
 public class LiveChatActivity extends AppCompatActivity implements View.OnTouchListener{
 
     WebView chatWin;
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -101,7 +103,7 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
         chatWin = (WebView) findViewById(R.id.chatWin);
 
         Intent intent = this.getIntent();
-        String chatUrl = intent.getStringExtra("chatURL");
+        String chatUrl = intent.getStringExtra("chat_url");
 
         chatWin.setWebViewClient(mWebViewClient);
         chatWin.setInitialScale(1);

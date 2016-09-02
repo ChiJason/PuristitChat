@@ -56,12 +56,6 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:text="Initialize"
-            android:id="@+id/initBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
             android:id="@+id/goChat"
             android:text="Chat"
             android:layout_width="wrap_content"
