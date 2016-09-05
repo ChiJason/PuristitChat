@@ -2,13 +2,10 @@ package com.example.jasonchi.puristitchat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -125,22 +122,22 @@ public class LiveChatActivity extends AppCompatActivity{
         //chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0&roomlist=1");
         chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=" + regid + "&roomlist=1");
 
-        chatWin.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                WebView myWebView = (WebView) v;
-                WebView.HitTestResult hr = myWebView.getHitTestResult();
-                if(hr != null){
-                    Log.e("onTouch: ", hr.getExtra() + " : " + hr.getType());
-
-                    if(event.getAction() == MotionEvent.ACTION_DOWN && hr.getType() == 7){
-                        finish();
-                    }
-                }
-                return false;
-            }
-        });
+//        chatWin.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                WebView myWebView = (WebView) v;
+//                WebView.HitTestResult hr = myWebView.getHitTestResult();
+//                if(hr != null){
+//                    Log.e("onTouch: ", hr.getExtra() + " : " + hr.getType());
+//
+//                    if(event.getAction() == MotionEvent.ACTION_DOWN && hr.getType() == 7){
+//                        finish();
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -160,7 +157,12 @@ public class LiveChatActivity extends AppCompatActivity{
     WebViewClient mWebViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+//            view.loadUrl(url);
+            if(url.contains("logout")){
+                finish();
+            }else {
+                view.loadUrl(url);
+            }
             return true;
         }
     };
