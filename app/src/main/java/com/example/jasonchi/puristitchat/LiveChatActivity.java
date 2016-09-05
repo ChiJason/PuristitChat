@@ -96,6 +96,8 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_live_chat);
+        getSupportActionBar().hide();
+
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
@@ -104,6 +106,7 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
 
         Intent intent = this.getIntent();
         String chatUrl = intent.getStringExtra("chat_url");
+        String regid = intent.getStringExtra("regid");
 
         chatWin.setWebViewClient(mWebViewClient);
         chatWin.setInitialScale(1);
@@ -114,7 +117,8 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
         chatWin.getSettings().setUseWideViewPort(true);
         chatWin.getSettings().setJavaScriptEnabled(true);
         chatWin.getSettings().setDomStorageEnabled(true);
-        chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0&roomlist=1");
+        //chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0&roomlist=1");
+        chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=" + regid + "&roomlist=1");
 
         chatWin.setOnTouchListener(this);
 
@@ -203,6 +207,8 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
 
         if(action == MotionEvent.ACTION_DOWN) {
             int type = hitTestResult.getType();
+            String showType = hitTestResult.getExtra();
+            Log.d("onTouch: ", showType);
 
             switch (type) {
                 case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:

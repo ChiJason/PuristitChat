@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Wei on 2016/9/2.
+ * Created by JasonChi on 2016/9/2.
  */
 public class MyLiveChat {
 
@@ -28,10 +28,11 @@ public class MyLiveChat {
     private String registerUrl = "https://api.puristit.com/register";
     private String initializeUrl = "https://api.puristit.com/initialize";
     private String chatUrl;
-    private String serverApiKey = "KBc1L02d1il8JyikmOsZlCO0enTEGJl";
+    private String clientApiKey = "ydNHyu6SxFBdmzU2QNOvVnIOUKefuQy";
     private String username;
     private String password;
     private String platform = "Android";
+    private String regid;
     private String p_username;
     private String p_password = "";
     RequestQueue queue;
@@ -41,7 +42,7 @@ public class MyLiveChat {
         this.username = user_name;
         this.password = user_pwd;
 
-        String regid = FirebaseInstanceId.getInstance().getToken();
+        regid = FirebaseInstanceId.getInstance().getToken();
         Log.e("REGID", regid);
 
 
@@ -55,21 +56,17 @@ public class MyLiveChat {
 
         sendRequest(registerUrl, param);
 
-//        paramI = new HashMap<>();
-//        paramI.put("p_username", this.p_username);
-//        paramI.put("p_password", this.p_password);
-//        paramI.put("name", this.username);
-//        paramI.put("platform", this.platform);
-//
-//        sendRequest(initializeUrl, paramI);
-
     }
 
     public String getChatUrl(){
         return chatUrl;
     }
 
-    public void sendRequest(String url, HashMap<String,String> param) {
+    public String getRegid() {
+        return regid;
+    }
+
+    public void sendRequest(String url, final HashMap<String,String> param) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(param),
                 new Response.Listener<JSONObject>() {
@@ -90,6 +87,7 @@ public class MyLiveChat {
                                 paramI.put("p_password", p_password);
                                 paramI.put("name", username);
                                 paramI.put("platform", platform);
+                                paramI.put("registration_id", regid);
                                 sendRequest(initializeUrl, paramI);
                             }
                         } catch (JSONException e) {
@@ -104,7 +102,7 @@ public class MyLiveChat {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String apiKey = serverApiKey +":"+ p_password;
+                String apiKey = clientApiKey +":"+ p_password;
                 String auth = "Basic " + Base64.encodeToString(apiKey.getBytes(), Base64.NO_WRAP);
                 HashMap<String,String> headers = new HashMap<>();
                 headers.put("Authorization",auth);
@@ -113,21 +111,5 @@ public class MyLiveChat {
             }
         };
        queue.add(jsonObjectRequest);
-    }
-
-    public String getP_username(){ return this.p_username; }
-
-    public String getP_password(){ return this.p_password; }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getPlatform() {
-        return platform;
     }
 }
