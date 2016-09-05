@@ -2,24 +2,29 @@ package com.example.jasonchi.puristitchat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class LiveChatActivity extends AppCompatActivity implements View.OnTouchListener{
+public class LiveChatActivity extends AppCompatActivity{
 
     WebView chatWin;
+    String chatUrl;
+    String regid;
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -105,8 +110,8 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
         chatWin = (WebView) findViewById(R.id.chatWin);
 
         Intent intent = this.getIntent();
-        String chatUrl = intent.getStringExtra("chat_url");
-        String regid = intent.getStringExtra("regid");
+        chatUrl = intent.getStringExtra("chat_url");
+        regid = intent.getStringExtra("regid");
 
         chatWin.setWebViewClient(mWebViewClient);
         chatWin.setInitialScale(1);
@@ -120,7 +125,22 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
         //chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0&roomlist=1");
         chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=" + regid + "&roomlist=1");
 
-        chatWin.setOnTouchListener(this);
+        chatWin.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                WebView myWebView = (WebView) v;
+                WebView.HitTestResult hr = myWebView.getHitTestResult();
+                if(hr != null){
+                    Log.e("onTouch: ", hr.getExtra() + " : " + hr.getType());
+
+                    if(event.getAction() == MotionEvent.ACTION_DOWN && hr.getType() == 7){
+                        finish();
+                    }
+                }
+                return false;
+            }
+        });
 
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -198,24 +218,6 @@ public class LiveChatActivity extends AppCompatActivity implements View.OnTouchL
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        WebView.HitTestResult hitTestResult = ((WebView) v).getHitTestResult();
-        int action = event.getActionMasked();
-
-        if(action == MotionEvent.ACTION_DOWN) {
-            int type = hitTestResult.getType();
-            String showType = hitTestResult.getExtra();
-            Log.d("onTouch: ", showType);
-
-            switch (type) {
-                case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
-                    Log.d("onTouch", "超連結");
-                    break;
-            }
-        }
-        return false;
-    }
 }
+
+
