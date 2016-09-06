@@ -11,7 +11,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,12 +36,10 @@ public class MyLiveChat {
     private String p_password = "";
     RequestQueue queue;
 
-    public MyLiveChat(String user_name, String user_pwd, Context context){
+    public MyLiveChat(String user_name, String user_pwd, String regid, Context context){
         this.username = user_name;
         this.password = user_pwd;
-
-        regid = FirebaseInstanceId.getInstance().getToken();
-        Log.e("REGID", regid);
+        this.regid = regid;
 
         queue = Volley.newRequestQueue(context);
 
@@ -57,11 +54,7 @@ public class MyLiveChat {
     }
 
     public String getChatUrl(){
-        return chatUrl;
-    }
-
-    public String getRegid() {
-        return regid;
+        return chatUrl + "?platform=Android&registration_id=" + regid + "&roomlist=1";
     }
 
     private void sendRequest(String url, final HashMap<String,String> param) {

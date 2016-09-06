@@ -20,7 +20,6 @@ public class LiveChatActivity extends AppCompatActivity{
 
     WebView chatWin;
     String chatUrl;
-    String regid;
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -99,7 +98,6 @@ public class LiveChatActivity extends AppCompatActivity{
         setContentView(R.layout.activity_live_chat);
         getSupportActionBar().hide();
 
-
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
@@ -107,7 +105,6 @@ public class LiveChatActivity extends AppCompatActivity{
 
         Intent intent = this.getIntent();
         chatUrl = intent.getStringExtra("chat_url");
-        regid = intent.getStringExtra("regid");
 
         chatWin.setWebViewClient(mWebViewClient);
         chatWin.setInitialScale(1);
@@ -118,7 +115,7 @@ public class LiveChatActivity extends AppCompatActivity{
         chatWin.getSettings().setUseWideViewPort(true);
         chatWin.getSettings().setJavaScriptEnabled(true);
         chatWin.getSettings().setDomStorageEnabled(true);
-        chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=" + regid + "&roomlist=1");
+        chatWin.loadUrl(chatUrl);
 
 
         // Set up the user interaction to manually show or hide the system UI.
