@@ -38,13 +38,11 @@ public class MyLiveChat {
     RequestQueue queue;
 
     public MyLiveChat(String user_name, String user_pwd, Context context){
-
         this.username = user_name;
         this.password = user_pwd;
 
         regid = FirebaseInstanceId.getInstance().getToken();
         Log.e("REGID", regid);
-
 
         queue = Volley.newRequestQueue(context);
 

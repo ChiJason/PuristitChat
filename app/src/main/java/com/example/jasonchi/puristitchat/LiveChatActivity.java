@@ -12,7 +12,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
-
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -119,25 +118,7 @@ public class LiveChatActivity extends AppCompatActivity{
         chatWin.getSettings().setUseWideViewPort(true);
         chatWin.getSettings().setJavaScriptEnabled(true);
         chatWin.getSettings().setDomStorageEnabled(true);
-        //chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=3eba0419-12cd-47bb-b497-e3d223b620d0&roomlist=1");
         chatWin.loadUrl(chatUrl + "?platform=Android&registration_id=" + regid + "&roomlist=1");
-
-//        chatWin.setOnTouchListener(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                WebView myWebView = (WebView) v;
-//                WebView.HitTestResult hr = myWebView.getHitTestResult();
-//                if(hr != null){
-//                    Log.e("onTouch: ", hr.getExtra() + " : " + hr.getType());
-//
-//                    if(event.getAction() == MotionEvent.ACTION_DOWN && hr.getType() == 7){
-//                        finish();
-//                    }
-//                }
-//                return false;
-//            }
-//        });
 
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -157,7 +138,6 @@ public class LiveChatActivity extends AppCompatActivity{
     WebViewClient mWebViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            view.loadUrl(url);
             if(url.contains("logout")){
                 finish();
             }else {

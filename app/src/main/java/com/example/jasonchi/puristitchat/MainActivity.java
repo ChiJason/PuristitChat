@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 liveChat = new MyLiveChat(cs.getUsername(), cs.getPassword(), this);
 
-
                 break;
             case R.id.goChat:
                 intent = new Intent();
