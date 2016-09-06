@@ -64,7 +64,7 @@ public class MyLiveChat {
         return regid;
     }
 
-    public void sendRequest(String url, final HashMap<String,String> param) {
+    private void sendRequest(String url, final HashMap<String,String> param) {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(param),
                 new Response.Listener<JSONObject>() {
