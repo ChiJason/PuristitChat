@@ -1,8 +1,11 @@
 package com.example.jasonchi.puristitchat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,12 +37,16 @@ public class MyLiveChat {
     private String regid;
     private String p_username;
     private String p_password = "";
-    RequestQueue queue;
+    private WebView mWebView;
+    private RequestQueue queue;
+    private Context mcontext;
 
-    public MyLiveChat(String user_name, String user_pwd, String regid, Context context){
+    public MyLiveChat(String user_name, String user_pwd, String regid, WebView webView, Context context){
         this.username = user_name;
         this.password = user_pwd;
         this.regid = regid;
+        this.mWebView = webView;
+        this.mcontext = context;
 
         queue = Volley.newRequestQueue(context);
 
@@ -49,13 +56,41 @@ public class MyLiveChat {
         param.put("name", this.username);
         param.put("platform", this.platform);
 
-        sendRequest(registerUrl, param);
+        mWebView.setWebViewClient(mWebViewClient);
+        mWebView.setInitialScale(1);
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.getSettings().setDisplayZoomControls(false);
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
 
     }
+
+    WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if(url.contains("logout")){
+                Activity activity = (Activity) mcontext;
+                activity.finish();
+            }else {
+                view.loadUrl(url);
+            }
+            return true;
+        }
+    };
 
     public String getChatUrl(){
         return chatUrl + "?platform=Android&registration_id=" + regid + "&roomlist=1";
     }
+
+    public void loadWebView(){
+
+        sendRequest(registerUrl, param);
+
+    }
+
 
     private void sendRequest(String url, final HashMap<String,String> param) {
 
@@ -69,6 +104,10 @@ public class MyLiveChat {
                             JSONObject obj = object.getJSONObject("result");
                             if(obj.has("chat_url")){
                                 chatUrl = obj.getString("chat_url");
+                                if(chatUrl != null)
+                                {
+                                    mWebView.loadUrl(getChatUrl());
+                                }
                             }else {
                                 p_username = obj.getString("p_username");
                                 p_password = obj.getString("p_password");

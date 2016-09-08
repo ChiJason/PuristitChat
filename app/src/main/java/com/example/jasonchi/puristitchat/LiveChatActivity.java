@@ -19,7 +19,7 @@ import android.webkit.WebViewClient;
 public class LiveChatActivity extends AppCompatActivity{
 
     WebView chatWin;
-    String chatUrl;
+    String username, password, regid;
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -104,19 +104,12 @@ public class LiveChatActivity extends AppCompatActivity{
         chatWin = (WebView) findViewById(R.id.chatWin);
 
         Intent intent = this.getIntent();
-        chatUrl = intent.getStringExtra("chat_url");
+        username = intent.getStringExtra("username");
+        password = intent.getStringExtra("password");
+        regid = intent.getStringExtra("regid");
 
-        chatWin.setWebViewClient(mWebViewClient);
-        chatWin.setInitialScale(1);
-        chatWin.getSettings().setSupportZoom(true);
-        chatWin.getSettings().setBuiltInZoomControls(true);
-        chatWin.getSettings().setDisplayZoomControls(false);
-        chatWin.getSettings().setLoadWithOverviewMode(true);
-        chatWin.getSettings().setUseWideViewPort(true);
-        chatWin.getSettings().setJavaScriptEnabled(true);
-        chatWin.getSettings().setDomStorageEnabled(true);
-        chatWin.loadUrl(chatUrl);
-
+        MyLiveChat liveChat = new MyLiveChat(username, password, regid, chatWin, this);
+        liveChat.loadWebView();
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -131,18 +124,6 @@ public class LiveChatActivity extends AppCompatActivity{
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
-
-    WebViewClient mWebViewClient = new WebViewClient() {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if(url.contains("logout")){
-                finish();
-            }else {
-                view.loadUrl(url);
-            }
-            return true;
-        }
-    };
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

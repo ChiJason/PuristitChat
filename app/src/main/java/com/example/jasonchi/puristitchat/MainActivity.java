@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -19,8 +20,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent intent;
     Customer cs;
     String regid;
-    MyLiveChat liveChat;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +51,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 cs.setPassword(uPasswd.getText().toString().trim());
                 cs.setUsername(uName.getText().toString().trim());
 
-                liveChat = new MyLiveChat(cs.getUsername(), cs.getPassword(), regid, this);
-
                 break;
             case R.id.goChat:
                 intent = new Intent();
                 intent.setClass(MainActivity.this, LiveChatActivity.class);
-                intent.putExtra("chat_url", liveChat.getChatUrl());
+                intent.putExtra("username", cs.getUsername());
+                intent.putExtra("password", cs.getPassword());
+                intent.putExtra("regid", regid);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+
+        private static final String TAG = "MyFirebaseIIDService";
+
+        /**
+         * Called if InstanceID token is updated. This may occur if the security of
+         * the previous token had been compromised. Note that this is called when the InstanceID token
+         * is initially generated so this is where you would retrieve the token.
+         */
+        // [START refresh_token]
+        @Override
+        public void onTokenRefresh() {
+            // Get updated InstanceID token.
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            Log.d(TAG, "Refreshed token: " + refreshedToken);
+
+            regid = refreshedToken;
         }
     }
 }
