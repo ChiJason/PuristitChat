@@ -1,7 +1,11 @@
 LiveChat library usage:
 
-1. new LiveChat(String username, String password, String registrationID, Context);
+1. new LiveChat(String username, String password, String registrationID, WebView yourWeView,Context);
 
-2. public method: getChatUrl();
+2. public method: loadWebView();  loading webview
 
-3. WebView.loadUrl("ChatUrl") load up Live Chat Windows;
+requires: username,
+	  password,
+	  registrationId,
+          webview,
+	  Context
