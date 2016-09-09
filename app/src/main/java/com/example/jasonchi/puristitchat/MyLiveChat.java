@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Created by JasonChi on 2016/9/2.
  */
-public class MyLiveChat {
+public abstract class MyLiveChat {
 
     private HashMap<String,String> param,paramI;
     private String registerUrl = "https://api.puristit.com/register";
@@ -81,7 +81,7 @@ public class MyLiveChat {
         }
     };
 
-    public String getChatUrl(){
+    private String getChatUrl(){
         return chatUrl + "?platform=Android&registration_id=" + regid + "&roomlist=1";
     }
 
@@ -90,6 +90,10 @@ public class MyLiveChat {
         sendRequest(registerUrl, param);
 
     }
+
+    protected abstract void beforeRequest();
+
+    protected abstract void afterRequest();
 
 
     private void sendRequest(String url, final HashMap<String,String> param) {

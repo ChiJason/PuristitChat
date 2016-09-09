@@ -108,7 +108,17 @@ public class LiveChatActivity extends AppCompatActivity{
         password = intent.getStringExtra("password");
         regid = intent.getStringExtra("regid");
 
-        MyLiveChat liveChat = new MyLiveChat(username, password, regid, chatWin, this);
+        MyLiveChat liveChat = new MyLiveChat(username, password, regid, chatWin, this) {
+            @Override
+            public void beforeRequest() {
+
+            }
+
+            @Override
+            public void afterRequest() {
+
+            }
+        };
         liveChat.loadWebView();
 
         // Set up the user interaction to manually show or hide the system UI.
