@@ -2,7 +2,9 @@ LiveChat library usage:
 
 1. new LiveChat(String username, String password, String registrationID, WebView yourWeView,Context);
 
-2. public method: loadWebView()  loading webview
+	- Setup FullScreen configuration for WebView
+
+2. public method: loadWebView()  Sending Request & makeup the Webview
 
 3. implement abstract method: beforeRequest() & afterRequest()
 
