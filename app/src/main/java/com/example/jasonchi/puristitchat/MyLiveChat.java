@@ -86,7 +86,7 @@ public abstract class MyLiveChat {
     }
 
     public void loadWebView(){
-
+        beforeRequest();
         sendRequest(registerUrl, param);
 
     }
@@ -94,7 +94,6 @@ public abstract class MyLiveChat {
     protected abstract void beforeRequest();
 
     protected abstract void afterRequest();
-
 
     private void sendRequest(String url, final HashMap<String,String> param) {
 
@@ -111,6 +110,7 @@ public abstract class MyLiveChat {
                                 if(chatUrl != null)
                                 {
                                     mWebView.loadUrl(getChatUrl());
+                                    afterRequest();
                                 }
                             }else {
                                 p_username = obj.getString("p_username");

@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -119,7 +117,9 @@ public class LiveChatActivity extends AppCompatActivity{
 
             }
         };
+
         liveChat.loadWebView();
+
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
